@@ -1,8 +1,8 @@
 // Drum Arrays
-let kicks = ['test', 'data', 1];
-let snares = [];
-let hiHats = []; 
-let rideCymbals = [];
+let kicks = new Array(16).fill(false);
+let snares = new Array(16).fill(false);
+let hiHats = new Array(16).fill(false);
+let rideCymbals = new Array(16).fill(false);
 
 // Function to initialise drum arrays as empty according to provided size
 const initArray = (arrays, size) => {
@@ -23,23 +23,25 @@ const initArray = (arrays, size) => {
 
 // Set all values in an existing array to false
 const clear = (array) => {
-    initArray([array], array.length)
+    if (array === 'kicks' || array === 'snares' || array === 'hiHats' || array === 'rideCymbals') {
+        eval(array).fill(false);
+    }
 }
 
 // Toggles individual drum state
 const toggleDrum = (drum, i) => {
-    drum[i] = !drum[i];
+    if (i < 0 || i > 16) return;
+    if (drum && typeof(i) === 'number') {
+        eval(drum)[i] = !eval(drum)[i];
+    }
 }
 
 // Invert array
 const invert = (array) => {
-    array.forEach((item, index) => {
-        toggleDrum(array, index);
-    })
+    if (array === 'kicks' || array === 'snares' || array === 'hiHats' || array === 'rideCymbals') {
+        array = eval(array);
+        array.forEach((item, index) => {
+            toggleDrum(array, index);
+        })
+    }
 }
-
-// Initialise and test the arrays
-initArray([kicks, snares, hiHats, rideCymbals], 16);
-kicks = [false, true, false];
-invert(kicks);
-console.log(kicks);
